@@ -28,7 +28,7 @@ import qualified Data.Map as M
 
 import XMonad.Actions.WindowGo (raiseMaybe)
 
-import XMonad.Util.Run (spawnPipe, runInTerm, safeSpawn)
+import XMonad.Util.Run (spawnPipe, safeSpawn)
 import XMonad.Util.XSelection (getSelection)
 import XMonad.Prompt.Input (inputPrompt)
 
@@ -55,7 +55,7 @@ setWindowBorder' c w = do
 colorFloating :: String -> X ()
 colorFloating = colorWhen isFloat
 
-{- dictionary and thesaurus to use for word lookup -}
+-- | dictionary and thesaurus to use for word lookup
 myDictionary, myThesaurus :: String
 myDictionary = " -d wn "
 myThesaurus = " -d moby-thesaurus "
@@ -64,10 +64,8 @@ myThesaurus = " -d moby-thesaurus "
 showDictionary = getSelection >>= spawnDictionary myDictionary
 showThesaurus = getSelection >>= spawnDictionary myThesaurus
 
-{-
- - The arguments to the sed utility. Used to highlight some words in
- - the output of dict.
- -}
+-- | The arguments to the sed utility. Used to highlight some words in
+--   the output of dict.
 sedArgs :: String
 sedArgs =  "-e '1,4d' "
         ++ "-e 's/{\\([^}]*\\)}/^fg(white)\\1^fg()/g' "
@@ -76,10 +74,8 @@ sedArgs =  "-e '1,4d' "
 dictBgColor = "black"
 dictFgColor = "#684"
 
-{-
- - Show a dzen2 window with the output of the dict program for
- - the given word
- -}
+-- | Show a dzen2 window with the output of the dict program for
+--   the given word
 spawnDictionary :: String -> String -> X ()
 spawnDictionary args word = spawn $ "dict " 
                                ++ args ++ " '" ++ word ++ "' "

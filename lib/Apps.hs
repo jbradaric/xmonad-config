@@ -131,14 +131,31 @@ apps = [
             { key = "M-a"
             , action = namedScratchpadAction scratchpads "alsamixer"
             }
+        , nullApp -- show help
+            { key = "M-S-h"
+            , action = showHelp
+            }
        ]
 
 scratchpads = [ NS "ncmpcpp" "urxvtc -geometry 120x40+100+50 -name ncmpcpp -e ncmpcpp" (wmName =? "ncmpcpp") defaultFloating
               , NS "irssi" "urxvtc -geometry 120x40+100+50 -name irssi -e irssi" (wmName =? "irssi") defaultFloating
-              , NS "alsamixer" "urxvtc -geometry 120x40x100x50 -name alsamixer -e alsamixer" (wmName =? "alsamixer") defaultFloating
+              , NS "alsamixer" "urxvtc -geometry 120x40+100+50 -name alsamixer -e alsamixer" (wmName =? "alsamixer") defaultFloating
               ]
               where wmName = stringProperty "WM_NAME"
 
+-- | Show the keybindings in a dzen2 window
+showHelp = spawn $ "dzen2 -l 16 -p -w 700 "
+            ++ "-bg 'black' "
+            ++ "-fg '#684' "
+            ++ "-fn 'Monaco-9' "
+            ++ "-x 300 -y 300 "
+            ++ "-e 'onstart=scrollhome,uncollapse;"
+            ++ "button4=scrollup;"
+            ++ "button5=scrolldown;"
+            ++ "button1=exit' "
+            ++ "< /home/m00nblade/.xmonad/keybindings.txt"
+
+-- | Convert the App entry to a (keybinding, action) pair
 toAction :: App -> (String, X ())
 toAction a = case shift a of
                   True -> (key', windows (W.greedyView w') >> action')

@@ -1,0 +1,19 @@
+Keybindings
+
+^fg(white)M-f^fg()        Firefox
+^fg(white)M-p^fg()        Pidgin
+^fg(white)M-i^fg()        Irssi
+^fg(white)M-<Left>^fg()   Next song
+^fg(white)M-<Right>^fg()  Previous song
+^fg(white)M-<Up>^fg()     Toggle play/pause
+^fg(white)M-l^fg()        Lock the computer
+^fg(white)M-n^fg()        Add note
+^fg(white)M-S-x^fg()      Toggle struts on current workspace
+^fg(white)M-S-t^fg()      Summon the terminal
+^fg(white)M-d d^fg()      Show dictionary entry for the selection
+^fg(white)M-d t^fg()      Show thesaurus entry for the selection
+^fg(white)M-d m^fg()      Search the dictionary for the user input
+^fg(white)M-c s^fg()      Switch conky config
+^fg(white)M-w s^fg()      Change wallpaper
+^fg(white)M-m^fg()        Show ncmpcpp
+^fg(white)M-a^fg()        Show alsamixer
