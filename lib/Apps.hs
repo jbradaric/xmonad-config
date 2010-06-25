@@ -127,10 +127,15 @@ apps = [
             { key = "M-m"
             , action = namedScratchpadAction scratchpads "ncmpcpp"
             }
+        , nullApp -- show alsamixer
+            { key = "M-a"
+            , action = namedScratchpadAction scratchpads "alsamixer"
+            }
        ]
 
 scratchpads = [ NS "ncmpcpp" "urxvtc -geometry 120x40+100+50 -name ncmpcpp -e ncmpcpp" (wmName =? "ncmpcpp") defaultFloating
               , NS "irssi" "urxvtc -geometry 120x40+100+50 -name irssi -e irssi" (wmName =? "irssi") defaultFloating
+              , NS "alsamixer" "urxvtc -geometry 120x40x100x50 -name alsamixer -e alsamixer" (wmName =? "alsamixer") defaultFloating
               ]
               where wmName = stringProperty "WM_NAME"
 
