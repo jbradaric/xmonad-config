@@ -6,7 +6,7 @@
 -- Maintainer  :  jbradaric at gmail dot com
 -- License     :  as-is
 -- 
--- XMonad configuration. Inspired by mntnoe's configuration found at
+-- xmonad configuration. Inspired by mntnoe's configuration found at
 -- http://www.mntnoe.com/2010/05/xmonad-config-may-2010/
 -- 
 -- 
