@@ -1,3 +1,14 @@
+-------------------------------------------------------------------------- {{{
+-- |
+-- Module      :  Hooks
+-- Copyright   :  (c) Jurica Bradarić 2010.
+-- Maintainer  :  jbradaric at gmail dot com
+-- License     :  as-is
+-- 
+-- Hooks for xmonad
+-- 
+-- 
+-------------------------------------------------------------------------- }}}
 module Hooks where
 
 import XMonad

@@ -1,3 +1,14 @@
+-------------------------------------------------------------------------- {{{
+-- |
+-- Module      :  Apps
+-- Copyright   :  (c) Jurica Bradarić 2010.
+-- Maintainer  :  jbradaric at gmail dot com
+-- License     :  as-is
+-- 
+-- Application settings.
+-- 
+-- 
+-------------------------------------------------------------------------- }}}
 module Apps (myApps) where
 
 import XMonad

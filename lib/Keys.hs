@@ -1,3 +1,14 @@
+-------------------------------------------------------------------------- {{{
+-- |
+-- Module      :  Keys
+-- Copyright   :  (c) Jurica Bradarić 2010.
+-- Maintainer  :  jbradaric at gmail dot com
+-- License     :  as-is
+-- 
+-- Keybindings
+-- 
+-- 
+-------------------------------------------------------------------------- }}}
 module Keys (myKeys) where
 
 import XMonad

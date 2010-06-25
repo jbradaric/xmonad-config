@@ -1,4 +1,15 @@
 {-# LANGUAGE FlexibleContexts #-}
+-------------------------------------------------------------------------- {{{
+-- |
+-- Module      :  Utils
+-- Copyright   :  (c) Jurica Bradarić 2010.
+-- Maintainer  :  jbradaric at gmail dot com
+-- License     :  as-is
+-- 
+-- Utility functions
+-- 
+-- 
+-------------------------------------------------------------------------- }}}
 module Utils
     ( runOrRaise'
     , colorFloating

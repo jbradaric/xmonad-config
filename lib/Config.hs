@@ -1,10 +1,21 @@
+-------------------------------------------------------------------------- {{{
+-- |
+-- Module      :  Config
+-- Copyright   :  (c) Jurica Bradarić 2010.
+-- Maintainer  :  jbradaric at gmail dot com
+-- License     :  as-is
+-- 
+-- Configuration for xmonad
+-- 
+-- 
+-------------------------------------------------------------------------- }}}
+
 module Config where
 
 import XMonad
-import qualified XMonad.StackSet as W
 import XMonad.Prompt
-import XMonad.Actions.FocusNth (focusNth)
 import XMonad.Hooks.DynamicLog
+
 import Hooks
 
 myStatusBar = "dzen2 -e 'entertitle:uncollapse;leavetitle:collapse' -x '0' -h '16' -w '300' -ta l -fg '"

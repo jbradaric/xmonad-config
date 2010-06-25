@@ -1,12 +1,18 @@
 {-# LANGUAGE FlexibleContexts #-}
-{- xmonad.hs
- - Author: Jurica Bradaric 
- - Version: 0.9.1
- -}
+-------------------------------------------------------------------------- {{{
+-- |
+-- Module      :  Utils
+-- Copyright   :  (c) Jurica Bradarić 2010.
+-- Maintainer  :  jbradaric at gmail dot com
+-- License     :  as-is
+-- 
+-- XMonad configuration. Inspired by mntnoe's configuration found at
+-- http://www.mntnoe.com/2010/05/xmonad-config-may-2010/
+-- 
+-- 
+-------------------------------------------------------------------------- }}}
 
--------------------------------------------------------------------------------
--- Imports --
-{- misc -}
+-- misc --
 import Graphics.X11.Xlib
 import IO (Handle, hPutStrLn) 
 
@@ -18,7 +24,6 @@ import XMonad.Util.Run (spawnPipe)
 import XMonad.Util.EZConfig (additionalKeysP)
 
 -- hooks
-{- import XMonad.Hooks.ManageDocks -}
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.UrgencyHook
