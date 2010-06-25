@@ -3,23 +3,34 @@ module Config where
 import XMonad
 import qualified XMonad.StackSet as W
 import XMonad.Prompt
-
+import XMonad.Actions.FocusNth (focusNth)
+import XMonad.Hooks.DynamicLog
 import Hooks
 
-myStatusBar = "dzen2 -e 'entertitle:uncollapse;leavetitle:collapse' -x '0' -h '16' -w '300' -ta l -fg '" ++ myNormalFGColor ++ "' -bg '" ++ myNormalBGColor ++ "' -fn '" ++ myFont ++ "'"
-myFont = "Monaco-8"
-myDzenFGColor = "#ccccdd"
-myDzenBGColor = "#000000"
-myNormalFGColor = "#ccccdd"
-myNormalBGColor = "#000000"
-myFocusedFGColor = "#0000ff"
-myFocusedBGColor = "#000000"
-myUrgentFGColor = "#0099ff"
-myUrgentBGColor = "#000000"
-myIconFGColor = "#777777"
-myIconBGColor = "#000000"
-mySeperatorColor = "#555555"
+myStatusBar = "dzen2 -e 'entertitle:uncollapse;leavetitle:collapse' -x '0' -h '16' -w '300' -ta l -fg '"
+            ++ dzenNormalFG 
+            ++ "' -bg '" ++ dzenNormalBG
+            ++ "' -fn '" ++ dzenFont ++ "'"
 
+-- | Colors
+dzenFont = "Monaco-8"
+dzenNormalFG = "#ccccdd"
+dzenNormalBG = "#000000"
+dzenCurrentFG = "#0b8bff"
+dzenCurrentBG = dzenNormalBG
+dzenUrgentFG = "#ff0000"
+dzenUrgentBG = dzenNormalBG
+dzenSeparatorFG = "#333333"
+dzenSeparatorBG = dzenNormalBG
+dzenLayoutFG = "#222222"
+dzenLayoutBG = dzenNormalBG
+
+normalBorderColor'  = "#333333"
+focusedBorderColor' = "#0775a8"
+
+dzenSeparator = " | "
+
+-- | Workspaces
 workspaces' :: [WorkspaceId]
 workspaces' = [ "term"
               , "dev"
@@ -35,18 +46,14 @@ workspaces' = [ "term"
 terminal' :: String
 terminal' = "urxvtc"
 
-myBrowser :: String
-myBrowser = "firefox"
+browser' :: String
+browser' = "firefox"
 
 modMask' :: KeyMask
 modMask' = mod4Mask
 
 borderWidth' :: Dimension
 borderWidth' = 1
-
-normalBorderColor', focusedBorderColor' :: String
-normalBorderColor'  = "#333333"
-focusedBorderColor' = "#0775a8"
 
 fadeAmount :: Rational
 fadeAmount = 0.4
@@ -76,3 +83,19 @@ myDarkXPC = defaultXPConfig
     }
 
 myScratchpadConf = defaultConfig { terminal = terminal' }
+
+-- status bar
+ppUrgentColor :: String -> String
+ppUrgentColor = dzenColor dzenUrgentFG dzenUrgentBG
+
+customPP = dzenPP
+    { ppCurrent = dzenColor dzenCurrentFG dzenCurrentBG
+    , ppUrgent = ppUrgentColor . trim . dzenStrip . wrap "[" "]"
+    , ppSep = dzenColor dzenSeparatorFG dzenSeparatorBG dzenSeparator
+    , ppTitle = const ""
+    , ppHiddenNoWindows = const ""
+    , ppHidden = \s -> if s == "NSP"
+                          then ""
+                       else wrap " ^bg()^fg(#333333)" " ^fg()" s
+    , ppLayout = wrap " " " " . dzenColor dzenLayoutFG dzenLayoutBG
+    }

@@ -71,3 +71,4 @@ myManageHook = (composeAll . concat)
           myFloats = ["Gimp"]
           myIgnored = ["desktop_window", "adl"]
           myBackgrounded = [("uzbl", "web")]
+
