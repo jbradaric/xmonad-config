@@ -2,7 +2,7 @@ module Config where
 
 import XMonad
 import qualified XMonad.StackSet as W
-import XMonad.Prompt --(XPConfig, defaultXPConfig)
+import XMonad.Prompt
 
 import Hooks
 
