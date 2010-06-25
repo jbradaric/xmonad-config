@@ -9,7 +9,10 @@
 -- 
 -- 
 -------------------------------------------------------------------------- }}}
-module Apps (myApps) where
+module Apps 
+    ( apps
+    , toAction
+    ) where
 
 import XMonad
 import qualified XMonad.StackSet as W
@@ -17,6 +20,7 @@ import XMonad.Actions.WindowGo (runOrRaise)
 import XMonad.Prompt.AppendFile
 import XMonad.Util.Scratchpad (scratchpadSpawnAction)
 import XMonad.Hooks.ManageDocks
+import XMonad.Util.NamedScratchpad
 
 import Utils
 import Config
@@ -57,8 +61,7 @@ apps = [
             }
        , shiftApp -- irssi
             { key = "M-i"
-            , workspace = "media"
-            , action = spawn "urxvtc -title IRSSI -e irssi"
+            , action = namedScratchpadAction scratchpads "irssi"
             }
        , nullApp -- previous song on playlist
             { key = "M-<Left>"
@@ -96,7 +99,7 @@ apps = [
             { key = "M-S-x"
             , action = sendMessage ToggleStruts
             }
-        , nullApp -- show scratchpad
+        , nullApp -- summon terminal
             { key = "M-S-t"
             , action = scratchpadSpawnAction myScratchpadConf
             }
@@ -122,9 +125,14 @@ apps = [
             }
         , nullApp -- show ncmpcpp
             { key = "M-m"
-            , action = runOrRaise' "/usr/bin/urxvtc" ["-geometry", "120x40+100+50", "-name", "ncmpcpp", "-e", "ncmpcpp"] (stringProperty "WM_NAME" =? "ncmpcpp")
+            , action = namedScratchpadAction scratchpads "ncmpcpp"
             }
        ]
+
+scratchpads = [ NS "ncmpcpp" "urxvtc -geometry 120x40+100+50 -name ncmpcpp -e ncmpcpp" (wmName =? "ncmpcpp") defaultFloating
+              , NS "irssi" "urxvtc -geometry 120x40+100+50 -name irssi -e irssi" (wmName =? "irssi") defaultFloating
+              ]
+              where wmName = stringProperty "WM_NAME"
 
 toAction :: App -> (String, X ())
 toAction a = case shift a of
@@ -134,5 +142,3 @@ toAction a = case shift a of
                   action' = action a
                   w' = workspace a
 
-myApps :: [(String, X ())]
-myApps = map toAction apps

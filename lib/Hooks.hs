@@ -36,6 +36,8 @@ import Data.Ratio((%))
 -- utils
 import XMonad.Util.Themes (theme,donaldTheme)
 
+import XMonad.Util.Scratchpad (scratchpadManageHook)
+
 -- Hooks
 manageHook' :: ManageHook
 manageHook' = foldr1 (<+>)
@@ -43,6 +45,7 @@ manageHook' = foldr1 (<+>)
             , manageHook defaultConfig
             , manageDocks
             , myManageHook
+            , scratchpadManageHook (W.RationalRect 0.4 0.5 0.6 0.3)
             ]
 
 layoutHook' = avoidStruts
@@ -69,7 +72,7 @@ myManageHook = (composeAll . concat)
     , [resource  =? resName --> doIgnore | resName <- myIgnored]
     , [className =? name --> doShift wspace <+> doF W.focusDown | (name, wspace) <- myBackgrounded]
     , [className =? "stalonetray" --> doIgnore]
-    , [stringProperty "WM_NAME" =? "ncmpcpp" --> doFloat]
+    , [wmName =? win --> doFloat | win <- scratchpads]
     ]
     where myShifts = [ ("Pidgin", "im")
                      , ("MPlayer", "media")
@@ -77,9 +80,10 @@ myManageHook = (composeAll . concat)
                      , ("Gvim", "dev")
                      , ("Evince", "reading")
                      , ("Acroread", "reading")
-                     , ("IRSSI", "irc")
                      ]
           myFloats = ["Gimp"]
           myIgnored = ["desktop_window", "adl"]
           myBackgrounded = [("uzbl", "web")]
+          scratchpads = ["ncmpcpp", "irssi"]
+          wmName = stringProperty "WM_NAME"
 

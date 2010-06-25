@@ -21,3 +21,4 @@ myKeys :: [(String, X ())]
 myKeys = concat [ myApps
                 , [("C-" ++ show k, focusNth i) | (i, k) <- zip [0..8] [1..]]
                 ]
+                where myApps = map toAction apps
