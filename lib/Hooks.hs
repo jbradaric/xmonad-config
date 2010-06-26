@@ -19,6 +19,7 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.UrgencyHook
+import XMonad.Hooks.ManageHelpers (isDialog, doCenterFloat)
 
 -- layouts
 import XMonad.Layout.NoBorders
@@ -31,6 +32,7 @@ import XMonad.Layout.Tabbed
 import XMonad.Layout.Circle
 import XMonad.Layout.ThreeColumns
 import XMonad.Layout.Accordion
+import XMonad.Layout.Reflect
 import Data.Ratio((%))
 
 -- utils
@@ -50,7 +52,7 @@ manageHook' = foldr1 (<+>)
 
 layoutHook' = avoidStruts
             $ onWorkspaces ["dev", "web"] (noBorders (tabbed shrinkText (theme donaldTheme)) ||| smartBorders threeCols)
-            $ onWorkspace "irc" (noBorders Circle ||| smartBorders threeCols ||| noBorders Full ||| noBorders Accordion)
+            $ onWorkspace "irc" (noBorders gimp ||| noBorders Circle ||| smartBorders threeCols ||| noBorders Full ||| noBorders Accordion)
             $ onWorkspace "term" (smartBorders threeCols ||| smartBorders Full ||| smartBorders Accordion)
             $ onWorkspace "im" (noBorders threeCols ||| Grid)
             $ onWorkspace "reading" (smartBorders (tabbed shrinkText (theme donaldTheme)))
@@ -61,29 +63,36 @@ layoutHook' = avoidStruts
     where
     tiled = ResizableTall 1 (2/100) (1/2) []
     threeCols = ThreeCol 1 (3/100) (1/2)
+    gimp = withIM (0.15) (Role "gimp-toolbox") $
+           reflectHoriz $
+           withIM (0.15) (Role "gimp-dock") $ reflectHoriz $ layoutHook defaultConfig
 
 myManageHook = (composeAll . concat)
-    [ [className =? name --> doShift wspace | (name, wspace) <- myShifts]
-    , [className =? name --> doFloat | name <- myFloats]
-    , [className =? "Namoroka" <&&> stringProperty "WM_WINDOW_ROLE" =? "Manager" --> doShift "mail" <+> doF W.focusDown]
-    , [className =? "Namoroka" <&&> stringProperty "WM_WINDOW_ROLE" =? "browser" --> doShift "web"  <+> doF W.focusDown]
-    , [className =? "Firefox" <&&> stringProperty "WM_WINDOW_ROLE" =? "Manager" --> doShift "mail" <+> doF W.focusDown]
-    , [className =? "Firefox" <&&> stringProperty "WM_WINDOW_ROLE" =? "browser" --> doShift "web"  <+> doF W.focusDown]
-    , [resource  =? resName --> doIgnore | resName <- myIgnored]
-    , [className =? name --> doShift wspace <+> doF W.focusDown | (name, wspace) <- myBackgrounded]
-    , [className =? "stalonetray" --> doIgnore]
-    , [wmName =? win --> doFloat | win <- scratchpads]
+    [ [condition        --> doShift wspace  | (condition, wspace) <- myShifts      ]
+    , [wmName =? win    --> doFloat         |           win       <- scratchpads   ]
+    , [isDialog         --> doCenterFloat                                          ]
+    , [condition        --> doIgnore        |       condition     <- myIgnored     ]
     ]
-    where myShifts = [ ("Pidgin", "im")
-                     , ("MPlayer", "media")
-                     , ("Smplayer", "media")
-                     , ("Gvim", "dev")
-                     , ("Evince", "reading")
-                     , ("Acroread", "reading")
+    where myShifts = [ (className =? "Pidgin"                           , "im"     )
+                     , (className =? "MPlayer"                          , "media"  )
+                     , (className =? "Smplayer"                         , "media"  )
+                     , (className =? "Gvim"                             , "dev"    )
+                     , (className =? "Evince"                           , "reading")
+                     , (className =? "gimp"                             , "irc"    )
+                     , (className =? "Gimp"                             , "irc"    )
+                     , (className =? "Namoroka" <&&> wmRole =? "Manager", "mail"   )
+                     , (className =? "Namoroka" <&&> wmRole =? "browser", "web"    )
+                     , (className =? "Firefox"  <&&> wmRole =? "Manager", "mail"   )
+                     , (className =? "Firefox"  <&&> wmRole =? "browser", "web"    )
                      ]
-          myFloats = ["Gimp"]
-          myIgnored = ["desktop_window", "adl"]
-          myBackgrounded = [("uzbl", "web")]
-          scratchpads = ["ncmpcpp", "irssi", "alsamixer", "tucan"]
+          scratchpads = [ "ncmpcpp"
+                        , "irssi"
+                        , "alsamixer"
+                        , "tucan"
+                        ]
+          myIgnored = [ resource =? "desktop_window"
+                      , resource =? "adl"
+                      , className =? "stalonetray"
+                      ]
           wmName = stringProperty "WM_NAME"
-
+          wmRole = stringProperty "WM_WINDOW_ROLE"
