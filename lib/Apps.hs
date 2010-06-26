@@ -21,6 +21,7 @@ import XMonad.Prompt.AppendFile
 import XMonad.Util.Scratchpad (scratchpadSpawnAction)
 import XMonad.Hooks.ManageDocks
 import XMonad.Util.NamedScratchpad
+import XMonad.Util.XSelection (getSelection)
 
 import Utils
 import Config
@@ -40,13 +41,18 @@ nullApp = App
         , action = return ()
         }
 
+{-
+ - shiftApp :: App
+ - shiftApp = App
+ -          { key = ""
+ -          , shift = True
+ -          , workspace = ""
+ -          , action = return ()
+ -          }
+ -}
+
 shiftApp :: App
-shiftApp = App
-         { key = ""
-         , shift = True
-         , workspace = ""
-         , action = return ()
-         }
+shiftApp = nullApp { shift = True }
 
 apps = [
          shiftApp -- Firefox
@@ -131,17 +137,34 @@ apps = [
             { key = "M-a"
             , action = namedScratchpadAction scratchpads "alsamixer"
             }
+        , nullApp -- show tucan
+            { key = "M-d r"
+            , action = namedScratchpadAction scratchpads "tucan"
+            }
+        , nullApp -- download selected links with tucan
+            { key = "M-z"
+            , action = downloadSelection
+            }
         , nullApp -- show help
             { key = "M-S-h"
             , action = showHelp
             }
        ]
 
-scratchpads = [ NS "ncmpcpp" "urxvtc -geometry 120x40+100+50 -name ncmpcpp -e ncmpcpp" (wmName =? "ncmpcpp") defaultFloating
-              , NS "irssi" "urxvtc -geometry 120x40+100+50 -name irssi -e irssi" (wmName =? "irssi") defaultFloating
-              , NS "alsamixer" "urxvtc -geometry 120x40+100+50 -name alsamixer -e alsamixer" (wmName =? "alsamixer") defaultFloating
+
+-- | download selected links with tucan
+downloadSelection :: X ()
+downloadSelection = do
+    getSelection >>= (io . writeFile "/tmp/tucan_links.txt")
+    namedScratchpadAction scratchpads "tucan"
+
+scratchpads = [ NS "ncmpcpp" ("urxvtc " ++ g ++ " -name ncmpcpp -e ncmpcpp") (wmName =? "ncmpcpp") defaultFloating
+              , NS "irssi" ("urxvtc " ++ g ++ " -name irssi -e irssi") (wmName =? "irssi") defaultFloating
+              , NS "alsamixer" ("urxvtc " ++ g ++ " -name alsamixer -e alsamixer") (wmName =? "alsamixer") defaultFloating
+              , NS "tucan" ("urxvtc " ++ g ++ " -name tucan -e tucan --cli -i /tmp/tucan_links.txt") (wmName =? "tucan") defaultFloating
               ]
               where wmName = stringProperty "WM_NAME"
+                    g = "-geometry 102x40+100+50"
 
 -- | Show the keybindings in a dzen2 window
 showHelp = spawn $ "dzen2 -l 16 -p -w 700 "

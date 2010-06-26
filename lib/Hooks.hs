@@ -84,6 +84,6 @@ myManageHook = (composeAll . concat)
           myFloats = ["Gimp"]
           myIgnored = ["desktop_window", "adl"]
           myBackgrounded = [("uzbl", "web")]
-          scratchpads = ["ncmpcpp", "irssi", "alsamixer"]
+          scratchpads = ["ncmpcpp", "irssi", "alsamixer", "tucan"]
           wmName = stringProperty "WM_NAME"
 
