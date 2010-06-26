@@ -138,9 +138,13 @@ apps = [
             { key = "M-S-h"
             , action = showHelp
             }
-        , nullApp
+        , nullApp -- show the `run command' prompt
             { key = "M-r"
             , action = shellPrompt myDarkXPC
+            }
+        , nullApp -- show mutt
+            { key = "M-e"
+            , action = namedScratchpadAction scratchpads "mutt"
             }
        ]
 
@@ -154,6 +158,7 @@ scratchpads = [ NS "ncmpcpp" ("urxvtc " ++ g ++ " -name ncmpcpp -e ncmpcpp") (wm
               , NS "irssi" ("urxvtc " ++ g ++ " -name irssi -e irssi") (wmName =? "irssi") defaultFloating
               , NS "alsamixer" ("urxvtc " ++ g ++ " -name alsamixer -e alsamixer") (wmName =? "alsamixer") defaultFloating
               , NS "tucan" ("urxvtc " ++ g ++ " -name tucan -e tucan --cli -i /tmp/tucan_links.txt") (wmName =? "tucan") defaultFloating
+              , NS "mutt" ("urxvtc " ++ g ++ " -name mutt -e mutt") (wmName =? "mutt") defaultFloating
               ]
               where wmName = stringProperty "WM_NAME"
                     g = "-geometry 102x40+100+50"

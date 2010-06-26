@@ -89,6 +89,7 @@ myManageHook = (composeAll . concat)
                         , "irssi"
                         , "alsamixer"
                         , "tucan"
+                        , "mutt"
                         ]
           myIgnored = [ resource =? "desktop_window"
                       , resource =? "adl"
