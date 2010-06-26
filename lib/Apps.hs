@@ -71,15 +71,15 @@ apps = [
             }
        , nullApp -- previous song on playlist
             { key = "M-<Left>"
-            , action = spawn "mpc prev"
+            , action = spawn "mpc --no-status prev"
             }
        , nullApp -- next song on playlist
             { key = "M-<Right>"
-            , action = spawn "mpc next"
+            , action = spawn "mpc --no-status next"
             }
         , nullApp -- toggle play/pause
             { key = "M-<Up>"
-            , action = spawn "mpc toggle"
+            , action = spawn "mpc --no-status toggle"
             }
         , nullApp -- Volume up
             { key = "<XF86AudioLowerVolume>"
@@ -150,7 +150,6 @@ apps = [
             , action = showHelp
             }
        ]
-
 
 -- | download selected links with tucan
 downloadSelection :: X ()
