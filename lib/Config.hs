@@ -83,8 +83,8 @@ myConfig = defaultConfig
 
 myDarkXPC :: XPConfig
 myDarkXPC = defaultXPConfig
-    { font              = "xft:Monaco 9"
-    , height            = 28
+    { font              = "xft:Monaco 8"
+    , height            = 16
     , bgColor           = "black"
     , fgColor           = "#684"
     , bgHLight          = "#785"

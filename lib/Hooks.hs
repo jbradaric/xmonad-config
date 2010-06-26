@@ -54,7 +54,7 @@ layoutHook' = avoidStruts
             $ onWorkspaces ["dev", "web"] (noBorders (tabbed shrinkText (theme donaldTheme)) ||| smartBorders threeCols)
             $ onWorkspace "irc" (noBorders gimp ||| noBorders Circle ||| smartBorders threeCols ||| noBorders Full ||| noBorders Accordion)
             $ onWorkspace "term" (smartBorders threeCols ||| smartBorders Full ||| smartBorders Accordion)
-            $ onWorkspace "im" (noBorders threeCols ||| Grid)
+            $ onWorkspace "im" (noBorders threeCols ||| Grid ||| withIM (0.7) (Role "conversation") Grid)
             $ onWorkspace "reading" (smartBorders (tabbed shrinkText (theme donaldTheme)))
             $ onWorkspace "media" (smartBorders Circle ||| smartBorders Full)
             $ onWorkspace "vm" (noBorders Full ||| smartBorders threeCols)

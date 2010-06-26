@@ -23,6 +23,9 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Util.NamedScratchpad
 import XMonad.Util.XSelection (getSelection)
 
+import XMonad.Prompt (greenXPConfig)
+import XMonad.Prompt.Shell
+
 import Utils
 import Config
 
@@ -134,6 +137,10 @@ apps = [
         , nullApp -- show help
             { key = "M-S-h"
             , action = showHelp
+            }
+        , nullApp
+            { key = "M-r"
+            , action = shellPrompt myDarkXPC
             }
        ]
 
