@@ -41,16 +41,6 @@ nullApp = App
         , action = return ()
         }
 
-{-
- - shiftApp :: App
- - shiftApp = App
- -          { key = ""
- -          , shift = True
- -          , workspace = ""
- -          , action = return ()
- -          }
- -}
-
 shiftApp :: App
 shiftApp = nullApp { shift = True }
 
@@ -136,10 +126,6 @@ apps = [
         , nullApp -- show alsamixer
             { key = "M-a"
             , action = namedScratchpadAction scratchpads "alsamixer"
-            }
-        , nullApp -- show tucan
-            { key = "M-d r"
-            , action = namedScratchpadAction scratchpads "tucan"
             }
         , nullApp -- download selected links with tucan
             { key = "M-z"

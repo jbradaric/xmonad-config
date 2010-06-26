@@ -17,3 +17,4 @@ Keybindings
 ^fg(white)M-w s^fg()      Change wallpaper
 ^fg(white)M-m^fg()        Show ncmpcpp
 ^fg(white)M-a^fg()        Show alsamixer
+^fg(white)M-z^fg()        Download selected links with tucan
