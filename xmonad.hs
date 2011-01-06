@@ -47,7 +47,9 @@ main = do
                                                    , "darkgreen"
                                                    , "-xs"
                                                    , "1"
-                                                   ] } 
+                                                   ]
+                                          , duration = (seconds 1)
+                                          } 
         $ myConfig
         { logHook = logHook' h } `additionalKeysP` myKeys
 

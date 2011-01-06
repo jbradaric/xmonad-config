@@ -80,10 +80,12 @@ myManageHook = (composeAll . concat)
                      , (className =? "Evince"                           , "reading")
                      , (className =? "gimp"                             , "irc"    )
                      , (className =? "Gimp"                             , "irc"    )
+                     , (className =? "deluge"                           , "irc"    )
                      , (className =? "Namoroka" <&&> wmRole =? "Manager", "mail"   )
                      , (className =? "Namoroka" <&&> wmRole =? "browser", "web"    )
                      , (className =? "Firefox"  <&&> wmRole =? "Manager", "mail"   )
                      , (className =? "Firefox"  <&&> wmRole =? "browser", "web"    )
+                     , (className =? "eclipse" <||> className =? "Eclipse", "dev"  )
                      ]
           scratchpads = [ "ncmpcpp"
                         , "irssi"

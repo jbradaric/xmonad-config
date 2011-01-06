@@ -64,15 +64,15 @@ apps = [
             }
        , nullApp -- previous song on playlist
             { key = "M-<Left>"
-            , action = spawn "mpc --no-status prev"
+            , action = spawn "ncmpcpp prev"
             }
        , nullApp -- next song on playlist
             { key = "M-<Right>"
-            , action = spawn "mpc --no-status next"
+            , action = spawn "ncmpcpp next"
             }
         , nullApp -- toggle play/pause
             { key = "M-<Up>"
-            , action = spawn "mpc --no-status toggle"
+            , action = spawn "ncmpcpp toggle"
             }
         , nullApp -- Volume up
             { key = "<XF86AudioLowerVolume>"
@@ -146,6 +146,18 @@ apps = [
             { key = "M-e"
             , action = namedScratchpadAction scratchpads "mutt"
             }
+        , nullApp -- show deluge-console
+            { key = "M-S-r"
+            , action = namedScratchpadAction scratchpads "deluge"
+            }
+        , nullApp -- set cpu scaling to powersave
+            { key = "M-S-p p"
+            , action = spawn "/home/m00nblade/.scripts/set_frequency_scaling.sh powersave"
+            }
+        , nullApp -- set cpu scaling to conservative
+            { key = "M-S-p c"
+            , action = spawn "/home/m00nblade/.scripts/set_frequency_scaling.sh conservative"
+            }
        ]
 
 -- | download selected links with tucan
@@ -159,6 +171,7 @@ scratchpads = [ NS "ncmpcpp" ("urxvtc " ++ g ++ " -name ncmpcpp -e ncmpcpp") (wm
               , NS "alsamixer" ("urxvtc " ++ g ++ " -name alsamixer -e alsamixer") (wmName =? "alsamixer") defaultFloating
               , NS "tucan" ("urxvtc " ++ g ++ " -name tucan -e tucan --cli -i /tmp/tucan_links.txt") (wmName =? "tucan") defaultFloating
               , NS "mutt" ("urxvtc " ++ g ++ " -name mutt -e mutt") (wmName =? "mutt") defaultFloating
+              , NS "deluge" ("urxvtc " ++ g ++ " -name deluge-console -e deluge-console") (wmName =? "deluge-console") defaultFloating
               ]
               where wmName = stringProperty "WM_NAME"
                     g = "-geometry 102x40+100+50"
