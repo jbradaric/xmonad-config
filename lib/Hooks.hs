@@ -19,7 +19,7 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.FadeInactive
 import XMonad.Hooks.UrgencyHook
-import XMonad.Hooks.ManageHelpers (isDialog, doCenterFloat)
+import XMonad.Hooks.ManageHelpers (isDialog, doCenterFloat, doRectFloat)
 
 -- layouts
 import XMonad.Layout.NoBorders
@@ -51,7 +51,7 @@ manageHook' = foldr1 (<+>)
             ]
 
 layoutHook' = avoidStruts
-            $ onWorkspaces ["dev", "web"] (noBorders (tabbed shrinkText (theme donaldTheme)) ||| smartBorders threeCols)
+            $ onWorkspaces ["dev", "web"] (noBorders Full ||| noBorders (tabbed shrinkText (theme donaldTheme)) ||| smartBorders threeCols)
             $ onWorkspace "irc" (noBorders gimp ||| noBorders Circle ||| smartBorders threeCols ||| noBorders Full ||| noBorders Accordion)
             $ onWorkspace "term" (smartBorders threeCols ||| smartBorders Full ||| smartBorders Accordion)
             $ onWorkspace "im" (noBorders threeCols ||| Grid ||| withIM (0.7) (Role "conversation") Grid)
@@ -72,6 +72,7 @@ myManageHook = (composeAll . concat)
     , [wmName =? win    --> doFloat         |           win       <- scratchpads   ]
     , [isDialog         --> doCenterFloat                                          ]
     , [condition        --> doIgnore        |       condition     <- myIgnored     ]
+    , [condition        --> doRectFloat (W.RationalRect 0.4 0.4 0.5 0.4)   |       condition     <- myFloats      ]
     ]
     where myShifts = [ (className =? "Pidgin"                           , "im"     )
                      , (className =? "MPlayer"                          , "media"  )
@@ -81,11 +82,11 @@ myManageHook = (composeAll . concat)
                      , (className =? "gimp"                             , "irc"    )
                      , (className =? "Gimp"                             , "irc"    )
                      , (className =? "deluge"                           , "irc"    )
-                     , (className =? "Namoroka" <&&> wmRole =? "Manager", "mail"   )
-                     , (className =? "Namoroka" <&&> wmRole =? "browser", "web"    )
-                     , (className =? "Firefox"  <&&> wmRole =? "Manager", "mail"   )
+                     , (className =? "Navigator" <&&> wmRole =? "browser", "web"   )
                      , (className =? "Firefox"  <&&> wmRole =? "browser", "web"    )
                      , (className =? "eclipse" <||> className =? "Eclipse", "dev"  )
+                     , (className =? "Nightly" <&&> wmRole =? "Manager", "mail"  )
+                     , (className =? "Nightly" <&&> wmRole =? "browser", "web"   )
                      ]
           scratchpads = [ "ncmpcpp"
                         , "irssi"
@@ -97,5 +98,8 @@ myManageHook = (composeAll . concat)
                       , resource =? "adl"
                       , className =? "stalonetray"
                       ]
+          myFloats = [ className =? "Navigator" <&&> wmRole =? "Manager"
+                     , className =? "Firefox"  <&&> wmRole =? "Manager"
+                     ] 
           wmName = stringProperty "WM_NAME"
           wmRole = stringProperty "WM_WINDOW_ROLE"

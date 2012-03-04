@@ -17,6 +17,7 @@ module Apps
 import XMonad
 import qualified XMonad.StackSet as W
 import XMonad.Actions.WindowGo (runOrRaise)
+import XMonad.Actions.GridSelect
 import XMonad.Prompt.AppendFile
 import XMonad.Util.Scratchpad (scratchpadSpawnAction)
 import XMonad.Hooks.ManageDocks
@@ -51,7 +52,7 @@ apps = [
          shiftApp -- Firefox
             { key = "M-f"
             , workspace = "web"
-            , action = runOrRaise "firefox" (className =? "Namoroka")
+            , action = runOrRaise "/home/m00nblade/.scripts/run_firefox.sh" (className =? "Navigator")
             }
        , shiftApp -- Pidgin
             { key = "M-p"
@@ -64,15 +65,16 @@ apps = [
             }
        , nullApp -- previous song on playlist
             { key = "M-<Left>"
-            , action = spawn "ncmpcpp prev"
+            {-, action = spawn "ncmpcpp prev"-}
+            , action = spawn "/home/m00nblade/.scripts/mpd_status.sh prev"
             }
        , nullApp -- next song on playlist
             { key = "M-<Right>"
-            , action = spawn "ncmpcpp next"
+            , action = spawn "/home/m00nblade/.scripts/mpd_status.sh next"
             }
         , nullApp -- toggle play/pause
             { key = "M-<Up>"
-            , action = spawn "ncmpcpp toggle"
+            , action = spawn "/home/m00nblade/.scripts/mpd_status.sh play"
             }
         , nullApp -- Volume up
             { key = "<XF86AudioLowerVolume>"
@@ -86,10 +88,10 @@ apps = [
             { key = "<XF86AudioMute>"
             , action = spawn "amixer -q sset Master toggle"
             }
-        , nullApp -- lock the computer
-            { key = "M-l"
-            , action = spawn "slock"
-            }
+--        , nullApp -- lock the computer
+--            { key = "M-l"
+--            , action = spawn "slock"
+--            }
         , nullApp -- add note
             { key = "M-n"
             , action = appendFilePrompt myDarkXPC "/home/m00nblade/NOTES"
@@ -157,6 +159,10 @@ apps = [
         , nullApp -- set cpu scaling to conservative
             { key = "M-S-p c"
             , action = spawn "/home/m00nblade/.scripts/set_frequency_scaling.sh conservative"
+            }
+        , nullApp -- show grid selection
+            { key = "M-S-e"
+            , action = goToSelected defaultGSConfig
             }
        ]
 

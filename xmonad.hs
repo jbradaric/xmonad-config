@@ -14,13 +14,13 @@
 
 -- misc --
 import Graphics.X11.Xlib
-import IO (Handle, hPutStrLn) 
+{-import IO (Handle, hPutStrLn) -}
 
 -- XMonad stuff
 import XMonad
 
 -- utils
-import XMonad.Util.Run (spawnPipe)
+import XMonad.Util.Run (spawnPipe, hPutStrLn)
 import XMonad.Util.EZConfig (additionalKeysP)
 
 -- hooks
@@ -53,9 +53,9 @@ main = do
         $ myConfig
         { logHook = logHook' h } `additionalKeysP` myKeys
 
-logHook' :: Handle ->  X ()
+{-logHook' :: Handle ->  X ()-}
 logHook' h = do
     dynamicLogWithPP (customPP { ppOutput = hPutStrLn h })
-    fadeInactiveLogHook fadeAmount -- fade inactive windows
+    -- fadeInactiveLogHook fadeAmount -- fade inactive windows
     colorFloating focusedBorderColor' -- add borders to floating windows
 

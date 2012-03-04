@@ -64,7 +64,7 @@ modMask' :: KeyMask
 modMask' = mod4Mask
 
 borderWidth' :: Dimension
-borderWidth' = 1
+borderWidth' = 0
 
 fadeAmount :: Rational
 fadeAmount = 0.4
