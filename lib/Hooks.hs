@@ -37,8 +37,13 @@ import Data.Ratio((%))
 
 -- utils
 import XMonad.Util.Themes (theme,donaldTheme)
+import XMonad.Util.NamedScratchpad
 
-import XMonad.Util.Scratchpad (scratchpadManageHook)
+scratchpadQuery :: Query Bool
+scratchpadQuery = resource =? "scratchpad"
+
+scratchpadManageHook' :: ManageHook
+scratchpadManageHook' = namedScratchpadManageHook [NS "" "" scratchpadQuery nonFloating]
 
 -- Hooks
 manageHook' :: ManageHook
@@ -47,7 +52,7 @@ manageHook' = foldr1 (<+>)
             , manageHook defaultConfig
             , manageDocks
             , myManageHook
-            , scratchpadManageHook (W.RationalRect 0.4 0.5 0.6 0.3)
+            , scratchpadManageHook'
             ]
 
 layoutHook' = avoidStruts
