@@ -24,7 +24,7 @@ myStatusBar = "dzen2 -e 'entertitle:uncollapse;leavetitle:collapse' -x '0' -h '1
             ++ "' -fn '" ++ dzenFont ++ "'"
 
 -- | Colors
-dzenFont = "Monaco-8"
+dzenFont = "Monaco-12"
 dzenNormalFG = "#ccccdd"
 dzenNormalBG = "#000000"
 dzenCurrentFG = "#0b8bff"
@@ -83,7 +83,7 @@ myConfig = defaultConfig
 
 myDarkXPC :: XPConfig
 myDarkXPC = defaultXPConfig
-    { font              = "xft:Monaco 8"
+    { font              = "xft:Monaco 12"
     , height            = 16
     , bgColor           = "black"
     , fgColor           = "#684"
