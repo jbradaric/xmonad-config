@@ -128,8 +128,12 @@ apps = [
             { key = "M-m"
             , action = namedScratchpadAction scratchpads "ncmpcpp"
             }
-        , nullApp -- show alsamixer
+        , nullApp -- show pavucontrol
             { key = "M-a"
+            , action = spawn "pavucontrol"
+            }
+        , nullApp -- show alsamixer
+            { key = "M-S-a"
             , action = namedScratchpadAction scratchpads "alsamixer"
             }
         , nullApp -- download selected links with tucan
